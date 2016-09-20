@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/itemMessageDialog"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/item_margin">
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/dateMessageReceiveItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/contentMessageReceiveItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dateMessageReceiveItem"
+        android:background="@drawable/item_background_message_dialog"
+        android:gravity="center"
+        android:maxEms="15"
+        android:minHeight="35dp" />
+
+</RelativeLayout>

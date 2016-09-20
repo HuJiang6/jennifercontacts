@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/itemMessageDialog"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/item_margin">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dateMessageSendItem">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/stateMessageSendItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/contentMessageSendItem"
+            android:layout_toStartOf="@+id/contentMessageSendItem"
+            android:textColor="@color/blue" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/contentMessageSendItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/item_background_message_dialog"
+            android:gravity="center"
+            android:maxEms="15"
+            android:minHeight="35dp" />
+
+    </RelativeLayout>
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/dateMessageSendItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:textColor="@color/blue"
+        android:textSize="12sp" />
+
+</RelativeLayout>

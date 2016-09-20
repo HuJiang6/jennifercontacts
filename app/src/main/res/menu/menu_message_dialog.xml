@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/personal_home_message_dialog"
+        android:icon="@mipmap/ic_launcher"
+        android:title="@string/title_activity_contact_personal_home"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/call_menu_message_dialog"
+        android:icon="@drawable/ic_call_normal"
+        android:title="@string/call_menu_message_dialog"
+        app:showAsAction="ifRoom" />
+</menu>

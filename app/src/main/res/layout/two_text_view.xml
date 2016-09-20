@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/nameTelephone"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/textTop"
+        android:singleLine="true"
+        android:gravity="center_vertical"
+        android:layout_width="wrap_content"
+        android:layout_weight="1"
+        android:layout_height="0dp" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/textBottom"
+        android:singleLine="true"
+        android:textSize="@dimen/number_size"
+        android:gravity="center_vertical"
+        android:layout_width="wrap_content"
+        android:layout_weight="1"
+        android:layout_height="0dp" />
+
+</LinearLayout>
