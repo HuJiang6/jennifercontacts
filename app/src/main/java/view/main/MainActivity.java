@@ -1,12 +1,11 @@
 package view.main;
 
-import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -16,15 +15,20 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.contacts.lhj.jennifercontacts.R;
 
 import presenter.main.MainPresenter;
 import presenter.main.MainStatusPresenter;
-import view.main.MainViewPagerAdapter;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    /**
+     * whether first press back button
+     */
+    private static Boolean isFirstPressedBack = true;
 
     /**
      * Id to identify a contacts permission request.
@@ -36,18 +40,6 @@ public class MainActivity extends AppCompatActivity
      */
     private static final String TAG = "MainActivity";
 
-    /**
-     * Permissions required to read and write contacts.
-     */
-    private static String[] PERMISSIONS = {
-            Manifest.permission.READ_CONTACTS,
-            Manifest.permission.WRITE_CONTACTS,
-            Manifest.permission.READ_CALL_LOG,
-            Manifest.permission.WRITE_CALL_LOG,
-            Manifest.permission.READ_SMS,
-            Manifest.permission.CALL_PHONE
-    };
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +49,6 @@ public class MainActivity extends AppCompatActivity
         int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
         Log.d(TAG, "Max memory is " + maxMemory + "KB");
         MainStatusPresenter.mainStart(this);
-//        frameWorkPermission();
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -123,56 +114,6 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    /**
-     * 权限检测 动态获取
-     */
-    private void frameWorkPermission() {
-        if (ActivityCompat.checkSelfPermission(this,
-                Manifest.permission.READ_CONTACTS) !=
-                PackageManager.PERMISSION_GRANTED ||
-                ActivityCompat.checkSelfPermission(this,
-                        Manifest.permission.WRITE_CONTACTS) !=
-                        PackageManager.PERMISSION_GRANTED ||
-                ActivityCompat.checkSelfPermission(this,
-                        Manifest.permission.READ_CALL_LOG) !=
-                        PackageManager.PERMISSION_GRANTED ||
-                ActivityCompat.checkSelfPermission(this,
-                        Manifest.permission.WRITE_CALL_LOG) !=
-                        PackageManager.PERMISSION_GRANTED ||
-                ActivityCompat.checkSelfPermission(this,
-                        Manifest.permission.READ_SMS) !=
-                        PackageManager.PERMISSION_GRANTED ||
-                ActivityCompat.checkSelfPermission(this,
-                        Manifest.permission.CALL_PHONE) !=
-                        PackageManager.PERMISSION_GRANTED) {
-            // Contacts permissions have not been granted.
-            requestPermissions();
-
-        }
-
-    }
-
-    private void requestPermissions() {
-        // BEGIN_INCLUDE(contacts_permission_request)
-        if (!ActivityCompat.shouldShowRequestPermissionRationale(this,
-                Manifest.permission.READ_CONTACTS) &&
-                !ActivityCompat.shouldShowRequestPermissionRationale(this,
-                        Manifest.permission.WRITE_CONTACTS) &&
-                !ActivityCompat.shouldShowRequestPermissionRationale(this,
-                        Manifest.permission.READ_CALL_LOG) &&
-                !ActivityCompat.shouldShowRequestPermissionRationale(this,
-                        Manifest.permission.WRITE_CALL_LOG) &&
-                !ActivityCompat.shouldShowRequestPermissionRationale(this,
-                        Manifest.permission.READ_SMS) &&
-                !ActivityCompat.shouldShowRequestPermissionRationale(this,
-                        Manifest.permission.CALL_PHONE)) {
-            // Contact permissions have not been granted yet. Request them directly.
-            ActivityCompat.requestPermissions(this, PERMISSIONS, REQUESTCODE);
-        }
-        // END_INCLUDE(contacts_permission_request)
-
-    }
-
     private void viewPagerInit(ViewPager viewPager) {
 
         MainViewPagerAdapter mainViewPagerAdapter =
@@ -187,38 +128,7 @@ public class MainActivity extends AppCompatActivity
 
         assert tabLayout != null;
         tabLayout.setupWithViewPager(viewPager);
-//        tabLayoutSelectedListener(tabLayout);
         MainPresenter.mainTableLayoutPresenter(tabLayout, this);
-
-    }
-
-    private void tabLayoutSelectedListener(TabLayout tabLayout) {
-        final String Tag = "tableLayoutInit";
-        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            /**
-             * 选中tab时候回调 2
-             */
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                Log.d(Tag, "onTabSelected");
-            }
-
-            /**
-             * 没选中时候回调 比onTabSelected先回调
-             */
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-                Log.d(Tag, "onTabUnselected");
-            }
-
-            /**
-             * 重复选中时回调
-             */
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-                Log.d(Tag, "onTabReselected");
-            }
-        });
 
     }
 
@@ -229,8 +139,26 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            if (isFirstPressedBack) {
+                Toast.makeText(this, "再按一次返回键退出", Toast.LENGTH_SHORT).show();
+                onBackPressedLogicDeal();
+            } else {
+                super.onBackPressed();
+            }
         }
+    }
+
+    private void onBackPressedLogicDeal() {
+        isFirstPressedBack = false;
+
+        Handler handler = new Handler();
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                isFirstPressedBack = true;
+            }
+        };
+        handler.postDelayed(runnable, 5000);
     }
 
     @Override
