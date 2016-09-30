@@ -1,8 +1,9 @@
 package com.contacts.lhj.jennifercontacts;
 
-import view.contacts.ContactsFragment;
-import view.called.CallHistoryFragment;
-import view.messages.MessageFragment;
+
+import com.contacts.lhj.view.called.CallHistoryFragment;
+import com.contacts.lhj.view.contacts.ContactsFragment;
+import com.contacts.lhj.view.messages.MessageFragment;
 
 /**
  * 作者：lhj on 2016/8/1 11:26

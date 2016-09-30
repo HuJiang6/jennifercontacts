@@ -2,7 +2,7 @@ package com.contacts.lhj.jennifercontacts;
 
 import android.app.Application;
 
-import model.contacts.ContactsBean;
+import com.contacts.lhj.model.contacts.ContactsBean;
 import tools.CustomizeSharedPreferences;
 
 /**
